@@ -8,4 +8,7 @@ public class UserDaoImpl implements UserDao{
     public void add() {
         System.out.println("dao add()");
     }
+    private void sada(){
+        System.out.println("第二版本");
+    }
 }
