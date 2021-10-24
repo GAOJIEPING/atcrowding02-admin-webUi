@@ -14,5 +14,6 @@ public class UserDaoImpl implements UserDao{
         System.out.println("我是热修复");
         System.out.println("hot-fix text");
         System.out.println("master ！");
+        System.out.println("hot merge 1");
     }
 }
