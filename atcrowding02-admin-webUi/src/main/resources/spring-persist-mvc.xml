@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/mvc
+        https://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.atguigu.crowd.mvc"/>
+
+<!--    开启注解驱动-->
+    <mvc:annotation-driven/>
+    <mvc:resources mapping="js/**" location="/views/js/"/>
+    <mvc:resources mapping="css/**" location="/views/css/"/>
+    <mvc:resources mapping="bootstrap/**" location="/views/bootstrap/"/>
+    <mvc:resources mapping="fonts/**" location="/views/fonts/"/>
+    <mvc:resources mapping="img/**" location="/views/img/"/>
+    <mvc:resources mapping="layer/**" location="/views/layer/"/>
+    <mvc:resources mapping="script/**" location="/views/script/"/>
+    <mvc:resources mapping="ztree/**" location="/views/ztree/"/>
+    <mvc:default-servlet-handler/>
+<!--    编写视图解析器-->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+<!--    配置基于XML的异常处理-->
+    <bean id="mappingExceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings" >
+            <props >
+                    <prop key="java.lang.Exception">error-system</prop>
+                    <prop key="com.atguigu.exception.AccessForbidden">admin-login</prop>
+            </props>
+        </property>
+    </bean>
+<!--    配置拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+<!--            拦截的路径
+                /*   /aa
+                /**  /aa  /aa/aaa /aa/aaa/bbb
+-->
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/views/**"/>
+            <mvc:exclude-mapping path="/admin/to/login.do"/>
+            <mvc:exclude-mapping path="/admin/to/login.html"/>
+            <mvc:exclude-mapping path="/admin/do/logout.do"/>
+            <bean class="com.atguigu.crowd.mvc.intercpetor.LoginInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+<!--配置ViewController 使视图跳转到admin-login视图上-->
+    <mvc:view-controller path="/admin/to/login.html" view-name="admin-login"/>
+    <mvc:view-controller path="/mainDo/main.do" view-name="admin-main"/>
+    <mvc:view-controller path="admin/to/add.html" view-name="admin-add"/>
+</beans>
