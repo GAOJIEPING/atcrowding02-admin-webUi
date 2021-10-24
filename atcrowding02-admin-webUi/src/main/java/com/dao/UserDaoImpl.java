@@ -10,5 +10,6 @@ public class UserDaoImpl implements UserDao{
     }
     private void sada(){
         System.out.println("第二版本");
+        System.out.println("大家好");
     }
 }
