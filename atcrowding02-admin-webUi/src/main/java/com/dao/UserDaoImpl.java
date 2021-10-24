@@ -12,5 +12,6 @@ public class UserDaoImpl implements UserDao{
         System.out.println("第二版本");
         System.out.println("大家好");
         System.out.println("我是热修复");
+        System.out.println("hot-fix text");
     }
 }
